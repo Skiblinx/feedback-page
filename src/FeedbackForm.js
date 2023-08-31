@@ -10,15 +10,15 @@ const FeedbackForm = () => {
     const [btnDisabled, setBtnDisabled] = useState(true);
     const [message, setMessage] = useState('');
 
-    const { addFeedback, feedbackEdit } = useContext(FeedbackContext);
+    const { addFeedback, feedbackEdit, updateFeedback } = useContext(FeedbackContext);
 
-    // useEffect(() => {
-    //     if (feedbackEdit.edit === true) {
-    //         setBtnDisabled(false)
-    //         setText(feedbackEdit.item.text)
-    //         setRating(feedbackEdit.item.rating)
-    //     }
-    // }, [feedbackEdit])
+    useEffect(() => {
+        if (feedbackEdit.edit === true) {
+            setBtnDisabled(false)
+            setText(feedbackEdit.item.text)
+            setRating(feedbackEdit.item.rating)
+        }
+    }, [feedbackEdit])
 
     const handleTextChange = (e) => {
         if (text === '') {
@@ -36,6 +36,8 @@ const FeedbackForm = () => {
     }
 
     const handleSubmit = e => {
+        
+        e.preventDefault()
 
         if (text.trim().length > 10) {
             const newFeedback = {
@@ -44,9 +46,16 @@ const FeedbackForm = () => {
             }
             addFeedback(newFeedback)
 
+            if(feedbackEdit.edit === true){
+                updateFeedback(feedbackEdit.item.id, newFeedback)
+            }else{
+                addFeedback(newFeedback)
+            }
+
             setText('')
+            setRating('')
         }
-        e.preventDefault()
+
     }
 
     return (

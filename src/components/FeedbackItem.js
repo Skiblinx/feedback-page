@@ -14,7 +14,7 @@ const FeedbackItem = ({ item }) => {
             >
                 <FaTimes color="red" />
             </button>
-            <button onClick={item =>  editFeedback(item)} className='edit'>
+            <button onClick={() =>  editFeedback(item)} className='edit'>
                 <FaEdit color='purple' />
             </button>
             <div className="text-display">{item.text}</div>
